@@ -32,6 +32,7 @@ class SignupForm(forms.Form):
     """
     username = forms.RegexField(regex=USERNAME_RE,
                                 max_length=30,
+                                min_length = userena_settings.USERENA_USERNAME_MIN_LENGTH,                                
                                 widget=forms.TextInput(attrs=attrs_dict),
                                 label=_("Username"),
                                 error_messages={'invalid': _('Username must contain only letters, numbers, dots and underscores.')})
@@ -40,10 +41,12 @@ class SignupForm(forms.Form):
                              label=_("Email"))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict,
                                                            render_value=False),
-                                label=_("Create password"))
+                                label=_("Create password"),
+                                min_length = userena_settings.USERENA_PASSWORD_MIN_LENGTH)
     password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict,
                                                            render_value=False),
-                                label=_("Repeat password"))
+                                label=_("Repeat password"),
+                                min_length = userena_settings.USERENA_PASSWORD_MIN_LENGTH)
 
     def clean_username(self):
         """
